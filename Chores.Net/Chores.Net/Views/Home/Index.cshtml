@@ -9,23 +9,68 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-md-12">
+        <div id="form">
+            <div data-bind="visible: showPage(1)">
+                <div class="form-group">
+                    <label>SurName</label>
+                    <input type="text" class="form-control" id="input-surname" data-bind="value: surName">
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="input-name" data-bind="value: name">
+                </div>
+            </div>
+            <div data-bind="visible: showPage(2)">
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="text" class="form-control" id="input-age" data-bind="value: age">
+                </div>
+            </div>
+            <div data-bind="visible: showPage(3)">
+                <div class="form-group">
+                    <label>Street</label>
+                    <input type="text" class="form-control" id="input-age" data-bind="value: street">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default" data-bind="visible: showBack, click: back">Back</button>
+            <button type="submit" class="btn btn-default" data-bind="visible: showNext, click: next">Next</button>
+            <button type="submit" class="btn btn-default" data-bind="visible: showSubmit, click: submit">Submit</button>
+        </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        var maxPages = 3;
+        var observe = kendo.observable({
+            surName: 'Fill in your surname',
+            name: 'Fill in your name',
+            age: '',
+            street: '',
+            currentPage: 1,
+            showPage: function (id) {
+                return this.get("currentPage") == id;
+            },
+            showBack: function() {
+                return this.get("currentPage") > 1;
+            },
+            showNext: function() {
+                return this.get("currentPage") < maxPages;
+            },
+            showSubmit: function() {
+                return this.get("currentPage") == maxPages;
+            },
+            back: function() {
+                this.set("currentPage", this.get("currentPage") - 1);
+            },
+            next: function () {
+                this.set("currentPage", this.get("currentPage") + 1);
+            }
+        });
+
+        $(document).ready(function() {
+            kendo.bind($('#form'), observe);
+        });
+    });
+</script>
