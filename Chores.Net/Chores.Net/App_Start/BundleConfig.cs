@@ -16,10 +16,8 @@ namespace Chores.Net
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/Scripts/angular.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/kendo").Include("~/Scripts/Kendo/jszip.min.js")
+            bundles.Add(new ScriptBundle("~/bundles/kendo")
                 .Include("~/Scripts/Kendo/kendo.all.min.js")
-                .Include("~/Scripts/Kendo/cultures/*.js")
-                .Include("~/Scripts/Kendo/messages/*.js")
                 );
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -34,6 +32,10 @@ namespace Chores.Net
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/css/kendo")
+                .Include("~/Content/Kendo/kendo.common-bootstrap.min.css")
+                .Include("~/Content/Kendo/kendo.black.min.css"));
         }
     }
 }
