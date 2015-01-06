@@ -34,11 +34,23 @@
             <button type="submit" class="btn btn-default" data-bind="visible: showBack, click: back">Back</button>
             <button type="submit" class="btn btn-default" data-bind="visible: showNext, click: next">Next</button>
             <button type="submit" class="btn btn-default" data-bind="visible: showSubmit, click: submit">Submit</button>
+            <div class="current-state">
+                <h4>Current view model state:</h4>
+                <pre>
+                {
+                    surname: <span data-bind="text: surName"></span>,
+                    name: <span data-bind="text: name"></span>,
+                    age: <span data-bind="text: age"></span>,
+                    sex: <span data-bind="text: sexId.id"></span>
+                }
+                </pre>
+            </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
+    var demo;
     $(function () {
         var kDropDown;
         var maxPages = 3;
@@ -70,20 +82,21 @@
             },
             changeFilter: function() {
                 kDropDown.dataSource.filter({ field: "text", operator: "startswith", value: $('#filter-input').val() });
-                //kDropDown.refresh();
             }
         });
-
+        demo = observe;
         $(document).ready(function() {
             kendo.bind($('#form'), observe);
             $('#sex-input').kendoDropDownList({
                 dataTextField: 'text',
                 dataValueField: 'id',
+                optionLabel: 'Select sex',
                 dataSource: new kendo.data.DataSource({
                     data: [
                         { text: 'male', id: 1 },
                         { text: 'female', id: 2 }
-                    ]
+                    ],
+                    filter: { field: "text", operator: "startswith", value: $('#filter-input').val() }
                 })
             });
             kDropDown = $('#sex-input').data('kendoDropDownList');
